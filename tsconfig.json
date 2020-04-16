@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "svg-motion": [
+        "dist/svg-motion"
+      ],
+      "svg-motion/*": [
+        "dist/svg-motion/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
