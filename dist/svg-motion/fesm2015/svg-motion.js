@@ -5,7 +5,7 @@ class LineSvgMotion {
     getLineAnimations() {
         return this.lineAnimations;
     }
-    drawLineGroupToVolume(dAttribute, element, volume, reverse = false) {
+    static drawLineGroupToVolume(dAttribute, element, volume, reverse = false) {
         const pointGroups = this.generatePointGroups(dAttribute);
         for (let i = 0; i < pointGroups.length; i++) {
             if (reverse) {
@@ -100,7 +100,7 @@ class LineSvgMotion {
     }
     recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, currentStep, isExpand, isReversed, finishCallback) {
         if (this.existLineAnimation(animationId)) {
-            this.drawLineGroupToVolume(dAttribute, element, 100 * this.calcMotionTrigonometricEquations(currentStep / step), isReversed);
+            LineSvgMotion.drawLineGroupToVolume(dAttribute, element, 100 * this.calcMotionTrigonometricEquations(currentStep / step), isReversed);
             if ((isExpand && currentStep === step) ||
                 (!isExpand && currentStep === 0)) {
                 if (finishCallback != null) {
@@ -118,7 +118,7 @@ class LineSvgMotion {
             }
         }
     }
-    generatePointGroups(dAttribute) {
+    static generatePointGroups(dAttribute) {
         const pointGroupStrings = dAttribute.split("M");
         const pointGroups = [];
         if (pointGroupStrings[0] === "") {
@@ -141,10 +141,10 @@ class LineSvgMotion {
         }
         return pointGroups.length > 0 ? pointGroups : null;
     }
-    countOccurrences(text, search) {
+    static countOccurrences(text, search) {
         return text.split(search).length - 1;
     }
-    getRangeOf(text, search, no) {
+    static getRangeOf(text, search, no) {
         if (this.countOccurrences(text, search) >= no) {
             let startIndex = 0;
             let endIndex = 0;
@@ -163,22 +163,22 @@ class LineSvgMotion {
             return null;
         }
     }
-    getPointsDistance(point1, point2) {
+    static getPointsDistance(point1, point2) {
         return Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point1[1], 2));
     }
-    getLineLength(pointGroup) {
+    static getLineLength(pointGroup) {
         let length = 0.0;
         for (let i = 1; i < pointGroup.length; i++) {
             length += this.getPointsDistance(pointGroup[i - 1], pointGroup[i]);
         }
         return length;
     }
-    roundPoint(point) {
+    static roundPoint(point) {
         point[0] = Math.round((point[0] + Number.EPSILON) * 1000) / 1000;
         point[1] = Math.round((point[1] + Number.EPSILON) * 1000) / 1000;
         return point;
     }
-    changePointGroupAtLength(pointGroup, length) {
+    static changePointGroupAtLength(pointGroup, length) {
         let currentLength = 0;
         const newPointGroup = [pointGroup[0]];
         for (let i = 1; i < pointGroup.length; i++) {
@@ -197,7 +197,7 @@ class LineSvgMotion {
         }
         return newPointGroup;
     }
-    getPointGroupStringMissing(pointGroupString, pointGroupNo) {
+    static getPointGroupStringMissing(pointGroupString, pointGroupNo) {
         const pointGroupNum = this.countOccurrences(pointGroupString, 'M');
         let pointGroupMissingNum = 0;
         let pointGroupMissingString = '';
@@ -209,7 +209,7 @@ class LineSvgMotion {
         }
         return pointGroupMissingString;
     }
-    drawLineToVolume(pointGroup, pointGroupNo, dAttribute, element, volume) {
+    static drawLineToVolume(pointGroup, pointGroupNo, dAttribute, element, volume) {
         if (volume >= 0 && volume <= 100) {
             const length = this.getLineLength(pointGroup) / 100 * volume;
             const newPointGroup = this.changePointGroupAtLength(pointGroup, length);

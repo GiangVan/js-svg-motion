@@ -11,7 +11,7 @@
         LineSvgMotion.prototype.getLineAnimations = function () {
             return this.lineAnimations;
         };
-        LineSvgMotion.prototype.drawLineGroupToVolume = function (dAttribute, element, volume, reverse) {
+        LineSvgMotion.drawLineGroupToVolume = function (dAttribute, element, volume, reverse) {
             if (reverse === void 0) { reverse = false; }
             var pointGroups = this.generatePointGroups(dAttribute);
             for (var i = 0; i < pointGroups.length; i++) {
@@ -114,7 +114,7 @@
         LineSvgMotion.prototype.recursiveAnimationLineGroup = function (animationId, dAttribute, element, step, speed, currentStep, isExpand, isReversed, finishCallback) {
             var _this = this;
             if (this.existLineAnimation(animationId)) {
-                this.drawLineGroupToVolume(dAttribute, element, 100 * this.calcMotionTrigonometricEquations(currentStep / step), isReversed);
+                LineSvgMotion.drawLineGroupToVolume(dAttribute, element, 100 * this.calcMotionTrigonometricEquations(currentStep / step), isReversed);
                 if ((isExpand && currentStep === step) ||
                     (!isExpand && currentStep === 0)) {
                     if (finishCallback != null) {
@@ -132,7 +132,7 @@
                 }
             }
         };
-        LineSvgMotion.prototype.generatePointGroups = function (dAttribute) {
+        LineSvgMotion.generatePointGroups = function (dAttribute) {
             var pointGroupStrings = dAttribute.split("M");
             var pointGroups = [];
             if (pointGroupStrings[0] === "") {
@@ -155,10 +155,10 @@
             }
             return pointGroups.length > 0 ? pointGroups : null;
         };
-        LineSvgMotion.prototype.countOccurrences = function (text, search) {
+        LineSvgMotion.countOccurrences = function (text, search) {
             return text.split(search).length - 1;
         };
-        LineSvgMotion.prototype.getRangeOf = function (text, search, no) {
+        LineSvgMotion.getRangeOf = function (text, search, no) {
             if (this.countOccurrences(text, search) >= no) {
                 var startIndex = 0;
                 var endIndex = 0;
@@ -177,22 +177,22 @@
                 return null;
             }
         };
-        LineSvgMotion.prototype.getPointsDistance = function (point1, point2) {
+        LineSvgMotion.getPointsDistance = function (point1, point2) {
             return Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point1[1], 2));
         };
-        LineSvgMotion.prototype.getLineLength = function (pointGroup) {
+        LineSvgMotion.getLineLength = function (pointGroup) {
             var length = 0.0;
             for (var i = 1; i < pointGroup.length; i++) {
                 length += this.getPointsDistance(pointGroup[i - 1], pointGroup[i]);
             }
             return length;
         };
-        LineSvgMotion.prototype.roundPoint = function (point) {
+        LineSvgMotion.roundPoint = function (point) {
             point[0] = Math.round((point[0] + Number.EPSILON) * 1000) / 1000;
             point[1] = Math.round((point[1] + Number.EPSILON) * 1000) / 1000;
             return point;
         };
-        LineSvgMotion.prototype.changePointGroupAtLength = function (pointGroup, length) {
+        LineSvgMotion.changePointGroupAtLength = function (pointGroup, length) {
             var currentLength = 0;
             var newPointGroup = [pointGroup[0]];
             for (var i = 1; i < pointGroup.length; i++) {
@@ -211,7 +211,7 @@
             }
             return newPointGroup;
         };
-        LineSvgMotion.prototype.getPointGroupStringMissing = function (pointGroupString, pointGroupNo) {
+        LineSvgMotion.getPointGroupStringMissing = function (pointGroupString, pointGroupNo) {
             var pointGroupNum = this.countOccurrences(pointGroupString, 'M');
             var pointGroupMissingNum = 0;
             var pointGroupMissingString = '';
@@ -223,7 +223,7 @@
             }
             return pointGroupMissingString;
         };
-        LineSvgMotion.prototype.drawLineToVolume = function (pointGroup, pointGroupNo, dAttribute, element, volume) {
+        LineSvgMotion.drawLineToVolume = function (pointGroup, pointGroupNo, dAttribute, element, volume) {
             if (volume >= 0 && volume <= 100) {
                 var length_1 = this.getLineLength(pointGroup) / 100 * volume;
                 var newPointGroup = this.changePointGroupAtLength(pointGroup, length_1);

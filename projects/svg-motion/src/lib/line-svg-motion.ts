@@ -8,7 +8,7 @@ export class LineSvgMotion {
 		return this.lineAnimations;
 	}
 
-	public drawLineGroupToVolume(dAttribute: string, element: HTMLElement, volume: number, reverse: boolean = false): string {
+	public static drawLineGroupToVolume(dAttribute: string, element: HTMLElement, volume: number, reverse: boolean = false): string {
 		const pointGroups: number[][][] = this.generatePointGroups(dAttribute);
 
 		for (let i = 0; i < pointGroups.length; i++) {
@@ -141,7 +141,7 @@ export class LineSvgMotion {
 
 	protected recursiveAnimationLineGroup(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, speed: number, currentStep: number, isExpand, isReversed: boolean, finishCallback?: () => void) {
 		if (this.existLineAnimation(animationId)) {
-			this.drawLineGroupToVolume(dAttribute, element, 100 * this.calcMotionTrigonometricEquations(currentStep / step), isReversed);
+			LineSvgMotion.drawLineGroupToVolume(dAttribute, element, 100 * this.calcMotionTrigonometricEquations(currentStep / step), isReversed);
 
 			if (
 				(isExpand && currentStep === step) ||
@@ -165,7 +165,7 @@ export class LineSvgMotion {
 		}
 	}
 
-	protected generatePointGroups(dAttribute: string): null | number[][][] {
+	protected static generatePointGroups(dAttribute: string): null | number[][][] {
 		const pointGroupStrings: string[] = dAttribute.split("M");
 		const pointGroups: number[][][] = [];
 
@@ -192,11 +192,11 @@ export class LineSvgMotion {
 		return pointGroups.length > 0 ? pointGroups : null;
 	}
 
-	protected countOccurrences(text: string, search: string): number {
+	protected static countOccurrences(text: string, search: string): number {
 		return text.split(search).length - 1;
 	}
 
-	protected getRangeOf(text: string, search: string, no: number): number[] | null {
+	protected static getRangeOf(text: string, search: string, no: number): number[] | null {
 		if (this.countOccurrences(text, search) >= no) {
 			let startIndex: number = 0;
 			let endIndex: number = 0;
@@ -218,11 +218,11 @@ export class LineSvgMotion {
 		}
 	}
 
-	protected getPointsDistance(point1: number[], point2: number[]): number {
+	protected static getPointsDistance(point1: number[], point2: number[]): number {
 		return Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point1[1], 2));
 	}
 
-	protected getLineLength(pointGroup: number[][]): number {
+	protected static getLineLength(pointGroup: number[][]): number {
 		let length: number = 0.0;
 
 		for (let i = 1; i < pointGroup.length; i++) {
@@ -232,14 +232,14 @@ export class LineSvgMotion {
 		return length;
 	}
 
-	protected roundPoint(point: number[]): number[] {
+	protected static roundPoint(point: number[]): number[] {
 		point[0] = Math.round((point[0] + Number.EPSILON) * 1000) / 1000;
 		point[1] = Math.round((point[1] + Number.EPSILON) * 1000) / 1000;
 
 		return point;
 	}
 
-	protected changePointGroupAtLength(pointGroup: number[][], length: number): number[][] {
+	protected static changePointGroupAtLength(pointGroup: number[][], length: number): number[][] {
 		let currentLength: number = 0;
 		const newPointGroup: number[][] = [pointGroup[0]];
 
@@ -263,7 +263,7 @@ export class LineSvgMotion {
 		return newPointGroup;
 	}
 
-	protected getPointGroupStringMissing(pointGroupString: string, pointGroupNo: number): string {
+	protected static getPointGroupStringMissing(pointGroupString: string, pointGroupNo: number): string {
 		const pointGroupNum: number = this.countOccurrences(pointGroupString, 'M');
 		let pointGroupMissingNum: number = 0;
 		let pointGroupMissingString: string = '';
@@ -279,7 +279,7 @@ export class LineSvgMotion {
 		return pointGroupMissingString;
 	}
 
-	protected drawLineToVolume(pointGroup: number[][], pointGroupNo: number, dAttribute: string, element: HTMLElement, volume: number): string {
+	public static drawLineToVolume(pointGroup: number[][], pointGroupNo: number, dAttribute: string, element: HTMLElement, volume: number): string {
 		if (volume >= 0 && volume <= 100) {
 			const length: number = this.getLineLength(pointGroup) / 100 * volume;
 			const newPointGroup: number[][] = this.changePointGroupAtLength(pointGroup, length);
