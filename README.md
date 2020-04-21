@@ -1,7 +1,7 @@
 # JS-SVG-Motion
 
 <h1 align="center">
-  <img src="logo.png" width="250"/>
+  <img src="logo.png" width="90"/>
 </h1>
 
 > Only used for **L** command of the **path** of **svg** elements.
