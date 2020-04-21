@@ -33,5 +33,5 @@ minimized
 import { LineSvgMotion } from  "svg-motion";
 ```
 
-## Tutorial
-[tutorial here](http://hutech.tech/svg-motion.html)
+## Tutorial & Demo
+[click here](http://hutech.tech/svg-motion.html)
