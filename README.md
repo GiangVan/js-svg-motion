@@ -17,11 +17,11 @@ localhost
 ```
 online
 ```html
-<script type="text/javascript" src="https://raw.githubusercontent.com/GiangVan/js-svg-motion/master/dist/svg-motion/svg-motion.cdn.js"></script>
+<script type="text/javascript" src="http://hutech.tech/svg-motion.cdn.js"></script>
 ```
 minimized
 ```html
-<script type="text/javascript" src="https://raw.githubusercontent.com/GiangVan/js-svg-motion/master/dist/svg-motion/svg-motion.cdn.min.js"></script>
+<script type="text/javascript" src="http://hutech.tech/svg-motion.cdn.min.js"></script>
 ```
 ### ES6
 ```javascript
