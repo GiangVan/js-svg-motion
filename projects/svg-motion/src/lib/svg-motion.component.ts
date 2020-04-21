@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { LineSvgMotion } from './svg-motion';
+import { LineSvgMotion } from './line-svg-motion';
 
 @Component({
 	selector: 'lib-svg-motion',
