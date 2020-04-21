@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { SvgMotion } from './svg-motion.service';
+import { LineSvgMotion } from './svg-motion';
 
 @Component({
 	selector: 'lib-svg-motion',
@@ -14,15 +14,17 @@ import { SvgMotion } from './svg-motion.service';
 })
 export class SvgMotionComponent implements OnInit, AfterViewInit {
 	@ViewChild("box", { static: true }) private boxRef: ElementRef<HTMLElement>;
+	private lineSvgMotion: LineSvgMotion;
 
-	constructor(private svgMotion: SvgMotion) {
+	constructor() {
 	}
 
 	ngOnInit() {
+		this.lineSvgMotion = new LineSvgMotion();
 	}
 
 	ngAfterViewInit() {
-		this.svgMotion.animateLineGroup(this.boxRef.nativeElement.getAttribute('d'), this.boxRef.nativeElement, {
+		this.lineSvgMotion.animateLineGroup(this.boxRef.nativeElement.getAttribute('d'), this.boxRef.nativeElement, {
 			time: 1000,
 			mode: 'loading'
 		});

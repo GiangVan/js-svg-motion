@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SvgMotion } from './svg-motion.service';
+import { LineSvgMotion } from './line-svg-motion';
 import { SvgMotionComponent } from './svg-motion.component';
 
 describe('SvgMotionService', () => {
