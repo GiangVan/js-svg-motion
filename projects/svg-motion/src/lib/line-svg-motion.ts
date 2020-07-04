@@ -33,7 +33,7 @@ export class LineSvgMotion {
 		},
 		finishCallback: () => void = null
 	): symbol {
-		
+
 		mode = mode.toUpperCase();
 		const lineAnimationId: symbol = this.pushNewLineAnimation();
 
@@ -43,6 +43,10 @@ export class LineSvgMotion {
 				break;
 
 			case 'LOADING':
+				this.handleAnimationLoadingMode(lineAnimationId, dAttribute, element, step, time, isReversed);
+				break;
+
+			case 'LOADING1':
 				this.handleAnimationLoadingMode(lineAnimationId, dAttribute, element, step, time, isReversed);
 				break;
 
@@ -56,6 +60,22 @@ export class LineSvgMotion {
 
 			case 'LOADING4':
 				this.handleAnimationLoading4Mode(lineAnimationId, dAttribute, element, step, time, isReversed);
+				break;
+
+			case 'LOADING5':
+				this.handleAnimationLoading5Mode(lineAnimationId, dAttribute, element, step, time, isReversed);
+				break;
+
+			case 'LOADING6':
+				this.handleAnimationLoading6Mode(lineAnimationId, dAttribute, element, step, time, isReversed);
+				break;
+
+			case 'LOADING7':
+				this.handleAnimationLoading7Mode(lineAnimationId, dAttribute, element, step, time, isReversed);
+				break;
+
+			case 'LOADING8':
+				this.handleAnimationLoading8Mode(lineAnimationId, dAttribute, element, step, time, isReversed);
 				break;
 
 			default:
@@ -76,14 +96,18 @@ export class LineSvgMotion {
 		return Symbol();
 	}
 
-	protected removeLineAnimation(id: symbol) {
+	public removeLineAnimation(id: symbol) {
 		const index: number = this.lineAnimations.indexOf(id);
 		if (index !== -1) {
 			this.lineAnimations.splice(index, 1);
 		}
 	}
 
-	protected existLineAnimation(id: symbol) {
+	public removeAllLineAnimation() {
+		this.lineAnimations = [];
+	}
+
+	public existLineAnimation(id: symbol) {
 		return this.lineAnimations.indexOf(id) !== -1;
 	}
 
@@ -96,26 +120,26 @@ export class LineSvgMotion {
 	}
 
 	protected handleAnimationLoadingMode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
-		const speed: number = time / step;
+		const speed: number = (time / step) / 2;
 		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
-			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 100, false, !isReversed, () => {
+			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, !isReversed, () => {
 				this.handleAnimationLoadingMode(animationId, dAttribute, element, step, time, isReversed);
 			});
 		});
 	}
 
 	protected handleAnimationLoading2Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
-		const speed: number = time / step;
+		const speed: number = (time / step) / 2;
 		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
-			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 100, false, isReversed, () => {
+			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, isReversed, () => {
 				this.handleAnimationLoading2Mode(animationId, dAttribute, element, step, time, isReversed);
 			});
 		});
 	}
 
 	protected handleAnimationLoading3Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
-		const speed: number = time / step;
-		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 100, false, !isReversed, () => {
+		const speed: number = (time / step) / 2;
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, !isReversed, () => {
 			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
 				this.handleAnimationLoading3Mode(animationId, dAttribute, element, step, time, isReversed);
 			});
@@ -123,16 +147,68 @@ export class LineSvgMotion {
 	}
 
 	protected handleAnimationLoading4Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
-		const speed: number = time / step;
-		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 100, false, isReversed, () => {
+		const speed: number = (time / step) / 2;
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, isReversed, () => {
 			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, !isReversed, () => {
 				this.handleAnimationLoading4Mode(animationId, dAttribute, element, step, time, isReversed);
 			});
 		});
 	}
 
+	protected handleAnimationLoading5Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
+		const speed: number = (time / step) / 4;
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
+			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, !isReversed, () => {
+				this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, !isReversed, () => {
+					this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, isReversed, () => {
+						this.handleAnimationLoading5Mode(animationId, dAttribute, element, step, time, isReversed);
+					});
+				});
+			});
+		});
+	}
+
+	protected handleAnimationLoading6Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
+		const speed: number = (time / step) / 4;
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, !isReversed, () => {
+			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, isReversed, () => {
+				this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
+					this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, !isReversed, () => {
+						this.handleAnimationLoading6Mode(animationId, dAttribute, element, step, time, !isReversed);
+					});
+				});
+			});
+		});
+	}
+
+	protected handleAnimationLoading7Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
+		const speed: number = (time / step) / 4;
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, isReversed, () => {
+			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, !isReversed, () => {
+				this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, !isReversed, () => {
+					this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
+						this.handleAnimationLoading7Mode(animationId, dAttribute, element, step, time, isReversed);
+					});
+				});
+			});
+		});
+	}
+
+	protected handleAnimationLoading8Mode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean) {
+		const speed: number = (time / step) / 4;
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, !isReversed, () => {
+			this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, isReversed, () => {
+				this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, step, false, isReversed, () => {
+					this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, speed, 0, true, !isReversed, () => {
+						this.handleAnimationLoading7Mode(animationId, dAttribute, element, step, time, !isReversed);
+					});
+				});
+			});
+		});
+	}
+
 	protected handleAnimationCollapseMode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean, finishCallback?: () => void) {
-		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, (time / step), 100, false, isReversed, finishCallback);
+		this.recursiveAnimationLineGroup(animationId, dAttribute, element, step, (time / step), step, false, isReversed, finishCallback);
 	}
 
 	protected handleAnimationNormalMode(animationId: symbol, dAttribute: string, element: HTMLElement, step: number, time: number, isReversed: boolean, finishCallback?: () => void) {
@@ -148,7 +224,7 @@ export class LineSvgMotion {
 				(!isExpand && currentStep === 0)
 			) {
 				if (finishCallback != null) {
-					finishCallback();
+					setTimeout(finishCallback, speed);
 				}
 			} else {
 				if (isExpand) {
